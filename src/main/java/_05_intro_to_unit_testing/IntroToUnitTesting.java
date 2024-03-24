@@ -17,7 +17,7 @@ Often times a unit of code will be a single method, but later on we will see "un
 only part of a method, and even multiple methods whose functionality are inextricably linked.
 
 The unit tests for this class can be found in a corresponding package under
- src/test/java/_05_intro_to_unit_testing/IntroToUnitTestingTest.java
+ src/test/java/_06_intro_to_unit_testing/IntroToUnitTestingTest.java
 
 Please review that code there and understand how it works, then move on to the next section.
  */

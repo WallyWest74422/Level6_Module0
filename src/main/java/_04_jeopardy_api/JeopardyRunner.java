@@ -1,5 +1,6 @@
 package _04_jeopardy_api;
 
+import _04_jeopardy_api.data_transfer_objects.Category;
 import _04_jeopardy_api.data_transfer_objects.Clue;
 
 import javax.swing.*;
@@ -9,14 +10,25 @@ public class JeopardyRunner {
     public static void main(String[] args) {
 
         JeopardyApi jeopardyApi = new JeopardyApi();
-
+Category category = new Category();
         //1. Create a score variable
-
+int score = 0;
         //2. Add a for loop where:
         //i starts at 100,
         //continues while i <= 1000
         //increments by 100
-
+for(int i = 100; i<=1000; i+=100){
+    if(i!=700 && i!=900){
+     Clue hint = jeopardyApi.getClue(i);
+     String question = hint.getQuestion();
+     String answer = hint.getAnswer();
+     String title = category.getTitle();
+String response = JOptionPane.showInputDialog(question);
+     if(response.equals(answer))
+         score+= hint.getValue();
+    }
+        }
+JOptionPane.showMessageDialog(null, "Your final score is "+score+"!");
             //3. If i == 700 or i == 900, continue;
             //there are no questions for these values
 
