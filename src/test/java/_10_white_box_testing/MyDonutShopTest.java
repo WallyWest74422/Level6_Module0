@@ -17,27 +17,53 @@ class MyDonutShopTest {
 
     MyDonutShop myDonutShop;
 
+    @Mock
+    DeliveryService ds;
+
+    @Mock
+    PaymentService ps;
+
+    @Mock
+    BakeryService bs;
+
     @BeforeEach
     void setUp() {
-
+        MockitoAnnotations.openMocks(this);
+        myDonutShop = new MyDonutShop(ps, ds, bs);
     }
 
     @Test
     void itShouldTakeDeliveryOrder() throws Exception {
         //given
-
+        Order order = new Order("CUSTOMER_NAME",
+                "CUSTOMER_PHONE_NUMBER",
+                1,
+                5.00,
+                "CREDIT_CARD_NUMBER",
+                true);
         //when
-
+        myDonutShop.openForTheDay();
+        myDonutShop.takeOrder(order);
         //then
+        verify(myDonutShop, times(1)).addOrder(order);
     }
 
     @Test
     void givenInsufficientDonutsRemaining_whenTakeOrder_thenThrowIllegalArgumentException() {
         //given
-
+        Order order = new Order("CUSTOMER_NAME",
+                "CUSTOMER_PHONE_NUMBER",
+                1,
+                5.00,
+                "CREDIT_CARD_NUMBER",
+                true);
         //when
-
+        myDonutShop.openForTheDay();
         //then
+        Throwable exceptionThrown = assertThrows(Exception.class, () -> myDonutShop.takeOrder(order));
+        assertEquals(exceptionThrown.getMessage(), "Insufficient donuts remaining");
+   //     verify(myDonutShop, never()).takeOrder(order);
+
     }
 
     @Test
