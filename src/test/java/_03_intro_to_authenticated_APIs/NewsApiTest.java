@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -27,27 +28,32 @@ class NewsApiTest {
 
     NewsApi newsApi;
 
+    private static final String baseUrl = "http://newsapi.org/v2/everything";
+    private static final String apiKey = "59ac01326c584ac0a069a29798794bec";
+
+    WebClient wc;
+
     @BeforeEach
     void setUp() {
-
+        newsApi = new NewsApi();
     }
 
     @Test
     void itShouldGetNewsStoryByTopic() {
         //given
-
         //when
-
+ApiExampleWrapper actual = newsApi.getNewsStoryByTopic("election");
         //then
+        assertTrue(actual.getTotalResults()>=1);
     }
 
     @Test
     void itShouldFindStory(){
         //given
-
         //when
-
+String actual = newsApi.findStory("politics");
         //then
+        assertTrue(!actual.isEmpty());
     }
 
 

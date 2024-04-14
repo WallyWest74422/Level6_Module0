@@ -38,6 +38,10 @@ public class NewsApi {
                 .build();
     }
 
+    NewsApi(WebClient wc){
+        this.webClient = wc;
+    }
+
     public void testRequest() {
 
         /*
