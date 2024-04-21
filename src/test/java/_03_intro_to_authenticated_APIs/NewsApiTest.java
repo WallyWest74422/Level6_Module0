@@ -31,16 +31,33 @@ class NewsApiTest {
     private static final String baseUrl = "http://newsapi.org/v2/everything";
     private static final String apiKey = "59ac01326c584ac0a069a29798794bec";
 
+    @Mock
     WebClient wc;
+    @Mock
+    private RequestHeadersUriSpec mockRequest;
+    @Mock
+    private RequestHeadersSpec mockSpec;
+    @Mock
+    private ResponseSpec mockResponseSpec;
+    @Mock
+    private Mono<ApiExampleWrapper> mockResponse;
 
     @BeforeEach
     void setUp() {
-        newsApi = new NewsApi();
+        MockitoAnnotations.openMocks(this);
+        newsApi = new NewsApi(wc);
     }
 
     @Test
     void itShouldGetNewsStoryByTopic() {
         //given
+        ApiExampleWrapper mockApiExampleWrapper = new ApiExampleWrapper();
+        mockApiExampleWrapper.setTotalResults(1);
+        when(wc.get()).thenReturn(mockRequest);
+        when(mockRequest.uri((Function<UriBuilder, URI>) any())).thenReturn(mockSpec);
+        when(mockSpec.retrieve()).thenReturn(mockResponseSpec);
+        when(mockResponseSpec.bodyToMono(ApiExampleWrapper.class)).thenReturn(mockResponse);
+        when(mockResponse.block()).thenReturn(mockApiExampleWrapper);
         //when
 ApiExampleWrapper actual = newsApi.getNewsStoryByTopic("election");
         //then

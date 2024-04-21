@@ -17,13 +17,13 @@ public class LeagueOfAmazingAstronauts {
 
     public void launchRocket(String destination){
         if(rocketship.isLoaded()) {
-            int milesToDesination = 0;
+            int milesToDestination = 0;
             if (destination.equals("Mars")) {
-                milesToDesination = 68_000_000;
+                milesToDestination = 68_000_000;
             } else {
                 throw new IllegalArgumentException("Destination is unavailable");
             }
-            rocketship.setDestination(destination, milesToDesination);
+            rocketship.setDestination(destination, milesToDestination);
             rocketship.launch();
         }
         else{

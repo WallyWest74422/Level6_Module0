@@ -64,7 +64,8 @@ public class NewsApi {
     }
 
     public ApiExampleWrapper getNewsStoryByTopic(String topic) {
-        Mono<ApiExampleWrapper> apiExampleWrapperMono = webClient.get()
+        WebClient.RequestHeadersUriSpec<?> requestHeadersUriSpec = webClient.get();
+        Mono<ApiExampleWrapper> apiExampleWrapperMono = requestHeadersUriSpec
                 .uri(uriBuilder -> uriBuilder
                         .queryParam("q", topic)
                         .queryParam("sortBy", "popularity")

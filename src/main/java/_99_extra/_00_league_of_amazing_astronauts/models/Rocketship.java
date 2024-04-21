@@ -27,9 +27,9 @@ public class Rocketship {
         }
     }
 
-    public void setDestination(String destination, int milesToDesination) {
+    public void setDestination(String destination, int milesToDestination) {
         this.destination = destination;
-        this.milesToDestination = milesToDesination;
+        this.milesToDestination = milesToDestination;
     }
 
     public void loadOccupant(Astronaut astronaut) {
@@ -43,7 +43,7 @@ public class Rocketship {
     }
 
     public boolean isLoaded(){
-        return this.astronaut == null;
+        return this.astronaut != null;
     }
 
     public Astronaut getAstronaut() {

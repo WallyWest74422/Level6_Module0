@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /*
@@ -19,27 +20,37 @@ class LeagueOfAmazingAstronautsTest {
 
     LeagueOfAmazingAstronauts underTest = new LeagueOfAmazingAstronauts();
 
+    @Mock
+    Astronaut yuriGagarin;
+
+    @Mock
+    Rocketship vostok;
+
     @BeforeEach
     void setUp() {
-
+MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void itShouldPrepareAstronaut() {
         //given
-
+        underTest.setRocketship(vostok);
         //when
-
+underTest.prepareAstronaut(yuriGagarin);
         //then
+        verify(yuriGagarin, times(1)).train();
+        verify(vostok, times(1)).loadOccupant(yuriGagarin);
     }
 
     @Test
     void itShouldLaunchRocket() {
         //given
-
+        underTest.setRocketship(vostok);
+        when(vostok.isLoaded()).thenReturn(true);
         //when
-
+underTest.launchRocket("Mars");
         //then
+verify(vostok, times(1)).launch();
     }
 
 
@@ -54,9 +65,12 @@ class LeagueOfAmazingAstronautsTest {
     @Test
     void itShouldThrowNotLoaded() {
         //given
-
+        underTest.setRocketship(vostok);
+when(vostok.isLoaded()).thenReturn(false);
         //when
-        //then
 
+        //then
+        Throwable exceptionThrown = assertThrows(Exception.class, () -> underTest.launchRocket("Cuba"));
+        assertEquals(exceptionThrown.getMessage(), "This astronaut is not trained");
     }
 }
