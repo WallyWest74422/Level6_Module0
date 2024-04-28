@@ -57,9 +57,12 @@ verify(vostok, times(1)).launch();
     @Test
     void itShouldThrowWhenDestinationIsUnknown() {
         //given
-
+underTest.setRocketship(vostok);
+when(vostok.isLoaded()).thenReturn(true);
         //when
+        Throwable exceptionThrown = assertThrows(Exception.class, () -> underTest.launchRocket("Venus"));
         //then
+        assertEquals(exceptionThrown.getMessage(), "Destination is unavailable");
     }
 
     @Test
@@ -68,9 +71,8 @@ verify(vostok, times(1)).launch();
         underTest.setRocketship(vostok);
 when(vostok.isLoaded()).thenReturn(false);
         //when
-
+        Throwable exceptionThrown = assertThrows(Exception.class, () -> underTest.launchRocket("Mars"));
         //then
-        Throwable exceptionThrown = assertThrows(Exception.class, () -> underTest.launchRocket("Cuba"));
-        assertEquals(exceptionThrown.getMessage(), "This astronaut is not trained");
+        assertEquals(exceptionThrown.getMessage(), "Rocketship is not loaded");
     }
 }
